@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raquel Sánchez  Illescas Web page</title>
+    
+    <div id="container" width="1080" height="720" z="1"></div>
+
+    <style>
+  
+     
+    </style>
+</head>
+<body>
+    <script src ="three.min.js"></script>
+    
+     <!--<script src="https://threejs.org/build/three.min.js"></script> -->
+
+   
+<script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script>
+
+<script type="module">
+
+
+   import {OrbitControls} from "./OrbitControls.js";
+   import {DragControls} from "./DragControls.js";
+   var container = document.getElementById("container");
+
+   var lineStatus = [];
+
+    const renderer = new THREE.WebGLRenderer();
+    const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 500);
+    camera.lookAt(0,1,0);
+    //const camera = new THREE.PerspectiveCamera(window.innerWidth / window.innerHeight);
+
+    const scene = new THREE.Scene();
+    let Mesh;
+    let light;
+
+    document.body.appendChild(container);
+    //container.appendChild(renderer.domElement);
+   
+
+    function init() {
+        scene.background = new THREE.Color('white');
+        camera.position.set(0, 0, 24);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        
+    }
+
+    function setLight() {
+        light = new THREE.AmbientLight(0xffffff); // soft white light
+        scene.add(light);
+    }
+
+    function loadGLTF() {
+        let player3DModel = new THREE.GLTFLoader();
+
+        player3DModel.load('./assets/CharacterForWeb.glb', (glb) => {
+            Mesh = glb.scene;
+            Mesh.scale.set(1,1,1);
+            scene.add(Mesh);
+            Mesh.position.x = 0;
+            Mesh.position.y = 7;
+            Mesh.position.z = 0;
+        
+
+        });
+    }
+
+
+  renderer.setSize(container.width , container.height);
+
+  
+            //variable para controles
+    const controlsOr  = new OrbitControls(camera, renderer.domElement);
+    scene.add(controlsOr);
+    controlsOr.target.set(0,0,0);
+
+    controlsOr.minZoom = 0.1;
+    controlsOr.maxZoom = 0.1;
+
+
+
+
+    controlsOr.enablePan= true;
+    controlsOr.maxPolarAngle = Math.PI + 0;
+    controlsOr.maxPolarAngle = Math.PI + 0;
+
+    controlsOr.screenSpacePanning = true; 
+
+        //controls.enableZoom = true;
+        controlsOr.enableDamping = true;
+        controlsOr.maxZoom = 0.5;
+
+        controlsOr.minAzimuthAngle = - 1; // radians
+		controlsOr.maxAzimuthAngle = 1;
+
+        controlsOr.enableZoom = true
+        ;
+
+    //const raycaster = new THREE.Raycaster();
+    //const mouse = new THREE.Vector2();
+
+    
+
+
+    // Raycast
+   
+   function onMouseMove( event ) {
+
+	// calculate mouse position in normalized device coordinates
+	// (-1 to +1) for both components
+
+	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+}
+
+/*function resetMaterials(){
+    for (let i = 0; i< scene.children.length; i++){
+        if(scene.children[i].Line_01material){
+            scene.children[i].Line_01material.opacity= 1.0;
+        }
+    }
+}
+resetMaterials();*/
+
+
+function animate() {
+        requestAnimationFrame(animate);
+        /*if (Mesh && Mesh.rotation) {
+            Mesh.rotation.y -= 0.005;
+        }*/
+        renderer.render(scene, camera);
+    }
+
+
+/*function hoverObjects() {
+
+// update the picking ray with the camera and mouse position
+raycaster.setFromCamera( mouse, camera );
+
+// calculate objects intersecting the picking ray
+const intersects = raycaster.intersectObjects( scene.children);
+
+for ( let i = 0; i < intersects.length; i ++ ) {
+
+    intersects[ i ].object.Line_01material.transparent = true;
+    intersects[i].object.Line_01material.opacity = 0.5;
+}
+
+renderer.render( scene, camera );
+
+}
+
+window.addEventListener( 'mousemove', onMouseMove, true );
+
+window.requestAnimationFrame(hoverObjects);*/
+
+       /*let  scene, camera, renderer;
+
+        import *  as THREE from "./three.module.js";
+        //import {module} from "./three.module.js";
+        
+        //import {GLTFLoader} from "./GLTFLoader.js";
+        
+        //const sceneColored = new THREE.S
+
+        /*function init(){
+            scene3DModel  = new THREE.Scene();
+        scene3DModel.background = new  THREE.Color(0xfae5dc);
+
+        hlight = new THREE.AmbientLight(0x404040,100);
+        scene3DModel.add(hlight);
+
+        renderer  = new  THREE.WebGLRenderer({antialias:  true});
+        renderer.setSize(window.innerWidth,window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        let  loader = new THREE.GLTFLoader();
+        loader.load('assets/KindOfMe3DForWeb.gltf',function(gltf){
+            scene3DModel.add(gltf.scene);
+            renderer.render(scene3DModel,camera);
+        });
+
+        init();
+        }*/
+
+    //add scene
+
+        /*renderer  = new  THREE.WebGLRenderer({antialias:  true});
+        renderer.setSize(window.innerWidth,window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        scene = new THREE.Scene();
+        //const color01 = new  THREE.Color(0xff000);
+        scene.add(scene);
+        */
+//add camera
+       /* camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight, 0.1,1000);
+        scene.add(camera);
+
+        //add light 1
+        const light_01 = new THREE.PointLight(0xFFFF00, 0xFF4000, 1);
+        light_01.position.set(6,6,6);
+        scene.add(light_01);
+
+        const light_02 = new THREE.HemisphereLight(0xFFFF00, 0xFF4000, 1);
+        light_02.position.set(0,6,0);
+        scene.add(light_02);
+        
+        /*const renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setSize(window.innerWidth,window.innerHeight);
+        document.body.appendChild(renderer.domElement);*/
+
+         //let´s try add a plane quizá  luego será el bckground
+        //const planeGeometry = new THREE.PlaneGeometry(35,1,10,10);
+        //const planeMaterial = new THREE.MeshPhongMaterial({color:0xF5BCA9});
+        //const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        //plane.position.set(1,1,1);
+        //scene.add(plane);
+        
+        //lets Add 3model now loader in same  ruta
+        //const loader = new GLTFLoader();
+        //const modelo3D = 
+        //const sphere = new THREE.Mesh(geometry_02,material_02);
+
+        //const obj;
+
+        /*loader.load('./KindOfMe3DForWeb.gltf',
+        function(gltf){
+            obj =  gltf.scene;
+            scene.add(gltf.asset);
+        }
+        
+        );*/
+       
+	// onProgress callback
+	/*function ( xhr ) {
+		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+	},
+
+	// onError callback
+	function ( err ) {
+		console.error( 'An error happened' );
+	}
+);*/
+
+
+     
+    const controls = new DragControls(lineStatus, camera, renderer.domElement);
+    scene.add(lineStatus);
+       //var geometry = new THREE.BoxGeometry(10,10,10);
+        for(var i = 0; i <  100 ; i++)
+        {
+
+            //var lineStatus = 
+            //new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({color: Math.random() * 0x00ff0000}));
+
+           // object.position.x = Math.random() * 1 - 10;
+
+            //object.castShadow = true;
+            //object.receiveShadow = true;
+
+            scene.add(lineStatus);
+
+            lineStatus.push(lineStatus);
+        
+
+        }
+
+        controls.addEventListener('dragStartCallback');
+   controls.addEventListener('dragend', dragendCallback);
+
+        function dragStartCallback(event){
+            startColor: event.object.material.color.getHex();
+            event.object.material.color.setHex(0x000000);
+        }
+
+        function dragendCallback(event){
+            event.object.material.color.setHex(startColor);
+
+        }
+
+        /*const controlsOr  = new THREE.OrbitControls(camera, renderer.domElement);
+        scene.add(controlsOr);*/
+      
+
+        // add lineas del horizonte
+        ///line 1
+        const Line_01material = new THREE.LineBasicMaterial({color: 0xFE2E2E});
+        const points_01 = [];
+        points_01.push(new THREE.Vector3(-20,0,0));
+        points_01.push(new THREE.Vector3(0,0,0));
+        points_01.push(new THREE.Vector3(20,0,0));
+        
+        const geometry_03 = new THREE.BufferGeometry().setFromPoints(points_01);
+        const line_01 = new THREE.Line(geometry_03,Line_01material);
+        scene.add(line_01);
+
+
+        //line 2 
+        const Line_02material = new THREE.LineBasicMaterial({color: 0xFE2E2E});
+        const points_02 = [];
+        
+
+        points_02.push(new THREE.Vector3(-20,0.3,0));
+        points_02.push(new THREE.Vector3(0,.3,0));
+        points_02.push(new THREE.Vector3(20,.3,0));
+
+        const geometry_04 = new THREE.BufferGeometry().setFromPoints(points_02);
+        const line_02 = new THREE.Line(geometry_04,Line_01material);
+        scene.add(line_02);
+        
+
+         //Add Cube later to be transfrom in line with border no me acuerdo para que deje grosor >> ground 
+        const geometry_01 = new THREE.BoxGeometry(35, 0.06, 0.01);
+        const material_01 = new THREE.MeshPhongMaterial({color:0xA9F5D0});
+        const cube = new THREE.Mesh(geometry_01,material_01);
+        cube.position.set(0,1,0);
+        scene.add(cube);
+        
+        //el sol
+        const geometry_02 = new THREE.SphereGeometry(0.9,42,23,0,Math.PI * 2,0,Math.PI);
+        const material_02 = new THREE.MeshPhongMaterial({color:0xF78181, wireframe: true});
+        const sphere = new THREE.Mesh(geometry_02,material_02);
+        //sphere.position.set(4,4,0);
+        sphere.position.y = 4.3;
+        sphere.position.x = 4.3;
+        sphere.position.z = 0;
+
+
+
+
+
+
+
+
+        //sphere.position.setFromPoints(4,4,0);
+        scene.add(sphere);
+
+        renderer.render(scene, camera);
+
+        //otro sol
+        /*const geometry = new THREE.CircleGeometry(2,12,23); 
+        const sphere_02 = new THREE.Mesh(geometry, material_02);
+        scene.add(sphere_02);*/
+
+
+        /*camera.position.z = 600;
+        camera.position.y = 0;
+        camera.position.x = 0;
+        
+        //variable para la posicion de la camara
+        const cameraPosition = new THREE.Vector3();
+
+
+        const render = function(){
+            requestAnimationFrame(render);
+
+            cube.rotation.x += 0.01;
+            //cube.rotation.y += 0.03;
+           //cube.position.z += 0.01;
+           //cube.position.z += -0.02;
+
+            //sphere.rotation.x  += 0.01;
+            sphere.rotation.y  += 0.003;
+
+            light_02.rotation.x += 0.01;
+            light_01.rotation.y += 0.1;
+
+            renderer.render(scene, camera);
+            //animate();
+        };
+
+        render();
+*/
+    init();
+    setLight();
+    loadGLTF();
+    animate();
+    </script>
+    
+</body>
+</html>
