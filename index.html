@@ -60,8 +60,8 @@
     function loadGLTF() {
         let player3DModel = new THREE.GLTFLoader();
 
-        player3DModel.load('/CharacterForWeb.glb', (glb) => {
-            Mesh = glb.scene;
+        player3DModel.load('/KindOfMe3DForWeb.gltf', (gltf) => {
+            Mesh = gltf.scene;
             Mesh.scale.set(1,1,1);
             scene.add(Mesh);
             Mesh.position.x = 0;
