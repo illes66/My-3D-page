@@ -184,7 +184,7 @@ window.requestAnimationFrame(hoverObjects);*/
         document.body.appendChild(renderer.domElement);
 
         let  loader = new THREE.GLTFLoader();
-        loader.load('assets/KindOfMe3DForWeb.gltf',function(gltf){
+        loader.load('/KindOfMe3DForWeb.gltf',function(gltf){
             scene3DModel.add(gltf.scene);
             renderer.render(scene3DModel,camera);
         });
